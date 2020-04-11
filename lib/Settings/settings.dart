@@ -1,8 +1,8 @@
 import 'package:bronco2/screens/LoginPage.dart';
+import 'package:bronco2/screens/UserProfile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bronco2/HomePage/CustomShapeClipper.dart';
-//import 'package:bronco2/screens/UserProfile.dart';
 
 Color firstColor = Color.fromRGBO(
   242,
@@ -88,7 +88,7 @@ class _Top extends State<Top> {
                             color: Color.fromRGBO(33, 37, 74, 0.5),
                             child: ListTile(
                               onTap: () {
-                                //navigateToProfile(context);
+                                navigateToProfile(context);
                               }, //go to profile
                               title: Text("My Profile",
                                   style: TextStyle(color: Colors.white)),
@@ -219,10 +219,10 @@ var below = Column(children: <Widget>[
           ]))
 ]);
 
-//Future navigateToProfile(context) async {
-//Navigator.push(
-//  context, MaterialPageRoute(builder: (context) => UserProfile()));
-//}
+Future navigateToProfile(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => UserProfile()));
+}
 
 Future navigateToSettings(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
