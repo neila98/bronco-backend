@@ -1,6 +1,6 @@
 import 'dart:async';
 
-//import 'package:bronco2/screens/LoginPage.dart';
+import 'package:bronco2/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //   Timer(
-    //     Duration(seconds: 6),
-    //   () => Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
+    Timer(
+        Duration(seconds: 6),
+        () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
 
     return Scaffold(
         backgroundColor: Color.fromRGBO(0, 0, 51, 1),

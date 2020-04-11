@@ -33,12 +33,6 @@ List<CityCard> cityCards = [
       "1799"),
 ];
 
-//ThemeData appTheme = ThemeData(
-//primaryColor: Color(),
-//textTheme: GoogleFonts.fjallaOneTextTheme(),
-
-//)
-
 class HomePage extends StatefulWidget {
   @override
   _HomePage createState() => _HomePage();
@@ -159,8 +153,6 @@ class _FirstSectionState extends State<FirstSection>
                             child: TextField(
                               controller:
                                   TextEditingController(text: toLocations[0]),
-                              //style: TextStyle
-
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 32.0, vertical: 14.0),
