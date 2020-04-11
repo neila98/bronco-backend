@@ -1,4 +1,4 @@
-//import 'package:bronco2/HomePage/HomePage.dart';
+import 'package:bronco2/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 FlatButton(
                     color: Color.fromRGBO(33, 37, 74, 1),
                     onPressed: () {
-                     // navigateToHomePage(context);
+                      navigateToHomePage(context);
                     },
                     child: Container(
                       height: 50,
@@ -150,6 +150,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-//Future navigateToHomePage(context) async {
-  //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-//}
+Future navigateToHomePage(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+}
