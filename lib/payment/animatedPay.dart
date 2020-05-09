@@ -1,6 +1,6 @@
 import 'package:bronco2/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
-//import 'package:bronco2/Payment/InsertPayment.dart';
+import 'package:bronco2/Payment/InsertPayment.dart';
 
 Color firstColor = Color.fromRGBO(
   242,
@@ -47,7 +47,6 @@ Color secondColor = Color.fromRGBO(
           title: Text(
             "Payment Confirmation",
             textAlign: TextAlign.center,
-            //style: TextAlign(TextAlign.center),
           ),
           backgroundColor: _appBarColor,
           centerTitle: true,
@@ -58,9 +57,6 @@ Color secondColor = Color.fromRGBO(
           ),
           padding: EdgeInsets.only(bottom: 100.0),
           duration: Duration(seconds: 3),
-          // height: _height,
-          // width: 40.0,
-          //color: Colors.blue,
           alignment: _alignment,
           child: Container(
             height: 35.0,
@@ -70,8 +66,8 @@ Color secondColor = Color.fromRGBO(
               size: 35.0,
             ),
           ),
-          onEnd: (){},
-         // {navigateToPayment(context);},
+          onEnd: ()
+          {navigateToPayment(context);},
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
@@ -112,7 +108,7 @@ Color secondColor = Color.fromRGBO(
     );
   }
 }
-/*Future navigateToPayment(context) async
+Future navigateToPayment(context) async
 {
   Navigator.push(context, MaterialPageRoute(builder: (context) => InsertPayment()));
-}*/
+}
