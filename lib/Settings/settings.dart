@@ -59,7 +59,16 @@ class _Top extends State<Top> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Icon(Icons.arrow_back, color: Color(0xff21254A)),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back_ios),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              color: Colors.black,
+                            ),
+                          ),
                           Text('Settings',
                               style: TextStyle(
                                   fontSize: 24.0,
