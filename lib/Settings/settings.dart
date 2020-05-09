@@ -1,7 +1,7 @@
 import 'package:bronco2/screens/LoginPage.dart';
 import 'package:bronco2/screens/UserProfile.dart';
 import 'package:flutter/material.dart';
-
+import 'package:bronco2/Booking/booking_page.dart';
 import 'package:bronco2/HomePage/CustomShapeClipper.dart';
 
 Color firstColor = Color.fromRGBO(
@@ -63,9 +63,11 @@ class _Top extends State<Top> {
                             alignment: Alignment.topLeft,
                             child: IconButton(
                               icon: Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+                              onPressed: () => navigateToHomePage(context),
+                              //{
+
+                                //Navigator.pop(context);
+                              //},
                               color: Colors.black,
                             ),
                           ),
@@ -108,6 +110,7 @@ class _Top extends State<Top> {
                             ),
                           ),
                           const SizedBox(height: 10.0),
+                          
                           Card(
                             margin:
                                 const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
@@ -117,11 +120,11 @@ class _Top extends State<Top> {
                             child: Column(
                               children: <Widget>[
                                 ListTile(
-                                  leading: Icon(Icons.lock_outline,
+                                  leading: Icon(Icons.book,
                                       color: Color.fromRGBO(33, 37, 74, 1)),
-                                  title: Text("Change Password"),
+                                  title: Text("My Bookings"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {}, //go to change password
+                                  onTap: () => navigateToBookings(context), //go to change password
                                 ),
                                 Container(
                                     width: double.infinity,
@@ -270,4 +273,7 @@ showAlertDialog(BuildContext context) {
       return alert;
     },
   );
+}
+Future navigateToBookings(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage()));
 }

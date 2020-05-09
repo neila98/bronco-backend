@@ -2,7 +2,20 @@ import 'package:bronco2/HomePage/CustomShapeClipper.dart';
 import 'package:bronco2/Settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:bronco2/Payment/flightSummary.dart';
 
+Color firstColor = Color.fromRGBO(
+  242,
+  152,
+  152,
+  1,
+);
+Color secondColor = Color.fromRGBO(
+  209,
+  159,
+  228,
+  1,
+);
 final Color discountBackgroundColor = Color(0xFFFFE08D);
 final Color chipBackgroundColor = Color(0xFFF6F6F6);
 
@@ -53,7 +66,7 @@ class FlightListFirstSection extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [firstColor, secondColor])),
-            height: 160.0,
+            height: 200.0,
           ),
         ),
         Column(
@@ -150,7 +163,7 @@ class FlightCard extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.only(right: 16.0),
-            height: 110.0,
+            height: 130.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [firstColor, secondColor]),
               borderRadius: BorderRadius.all(
@@ -186,10 +199,31 @@ class FlightCard extends StatelessWidget {
                     runSpacing: -8.0,
                     children: <Widget>[
                       FlightDetailChip(Icons.calendar_today, 'June 2019'),
-                      FlightDetailChip(Icons.flight_takeoff, 'Bronco Airlines'),
+                      //FlightDetailChip(Icons.flight_takeoff, 'Bronco Airlines'),
                       FlightDetailChip(Icons.star, '4.8'),
+                      MaterialButton(
+                      child: Column(
+                        children: <Widget>[
+                        Icon(Icons.payment),
+                        Text(
+                          'Buy',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ],
+                      ),
+                            //color: Color(0xff21254A),
+                            onPressed: () {
+                              navigateToFlightSUmmary(context);
+                            },
+                            
+                          )
                     ],
-                  )
+                    
+                  ),
+                  
                 ],
               ),
             ),
@@ -236,4 +270,7 @@ class FlightDetailChip extends StatelessWidget {
           ),
         ));
   }
+}
+Future navigateToFlightSUmmary(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightSummary()));
 }

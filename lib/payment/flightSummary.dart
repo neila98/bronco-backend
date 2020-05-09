@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bronco2/Payment/animatedPay.dart';
 import 'package:bronco2/HomePage/HomePage.dart';
+import 'package:bronco2/screens/flightList.dart';
 
 Color firstColor = Color.fromRGBO(
   242,
@@ -28,7 +29,7 @@ class _FlightSummaryState extends State<FlightSummary> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
            onPressed:(){
-             navigateToHomePage(context);
+             navigateToFlightList(context);
            } 
            ),
         title: Text(
@@ -74,9 +75,9 @@ class _FlightSummaryState extends State<FlightSummary> {
           children: <Widget>[
           
             SizedBox(height: 12.0),
-            getSummary('Depart Date' , '04 JUL 2020' , 'Depart Total' ,'209.00 MYR' ),
-            SizedBox(height: 12.0),
-            getSummary('Return Date','08 JUL 2020' , 'Return Total' , '209.00 myr'),
+            getSummary('Depart Date' , '24 JUNE 2020' , 'Depart Total' ,'599.00 MYR' ),
+            //SizedBox(height: 12.0),
+            //getSummary('Return Date','08 JUL 2020' , 'Return Total' , '209.00 myr'),
            
           ],
         ),
@@ -95,7 +96,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                '418.00',
+                '599.00',
                 style: TextStyle(
                     fontFamily: 'Comfortaa',
                     fontSize: 30.0,
@@ -204,4 +205,7 @@ Future navigateToPayConfirmation(context) async {
 }
 Future navigateToHomePage(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+}
+Future navigateToFlightList(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightList()));
 }

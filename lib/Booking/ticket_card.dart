@@ -1,4 +1,7 @@
+import 'package:bronco2/Booking/booking_page.dart';
+import 'package:bronco2/Payment/boardingPass.dart';
 import 'flight_stop_ticket.dart';
+import 'package:bronco2/Booking/flight_stop_ticket.dart';
 import 'package:flutter/material.dart';
 
 class TicketCard extends StatelessWidget {
@@ -18,7 +21,7 @@ class TicketCard extends StatelessWidget {
       margin: const EdgeInsets.all(2.0),
       child: InkWell(
         onTap: () {
-          // navigate ke boarding pass
+          navigateToBoardingPass(context);
         },
         child: _buildCardContent(),
       ),
@@ -39,12 +42,38 @@ class TicketCard extends StatelessWidget {
         new TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500);
 
     return Container(
-      height: 150.0,
-      child: Row(
+      height: 180.0,
+      
+      child: Column(
+        children: <Widget>[
+          Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: Padding(
+            
+            child: FlatButton(
+              onPressed: () {
+                navigateToBoardingPass(context);
+              }, 
+              child: Padding(
+                padding: const EdgeInsets.only(left: 40.0, top: 25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(stop.from, style: airportName),
+                  ),
+                  Text(stop.fromShort, style: airportShortName),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Text(stop.date, style: flightDate),
+                  )
+                ],
+                ),
+                )
+                )
+            /*Padding(
               padding: const EdgeInsets.only(left: 40.0, top: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +89,8 @@ class TicketCard extends StatelessWidget {
                   )
                 ],
               ),
-            ),
+            ),*/
+            
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,6 +121,7 @@ class TicketCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 5.0),
                       child: new FlatButton(
                         color: Colors.transparent,
+                       
                         onPressed: _showDialog,
 
                         child: Text('Cancel Booking',
@@ -101,9 +132,13 @@ class TicketCard extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
+        ],
+      ),
+      
+      
     );
   }
 
@@ -156,4 +191,7 @@ class TicketCard extends StatelessWidget {
       },
     );
   }
+}
+Future navigateToBoardingPass(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => BoardingPass()));
 }

@@ -3,8 +3,6 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bronco2/Payment/addNewCard.dart';
-//import 'package:bronco2/HomePage/HomePage.dart';
-import 'package:bronco2/Payment/animatedPay.dart';
 
 
 Color firstColor = Color.fromRGBO(
@@ -78,7 +76,7 @@ class _InsertPaymentState extends State<InsertPayment> {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                '418.00',
+                '599.00',
                 style: TextStyle(
                     fontFamily: 'Comfortaa',
                     fontSize: 30.0,
@@ -208,7 +206,7 @@ class _InsertPaymentState extends State<InsertPayment> {
                                             ),
                                           ),
                                           Text(
-                                            'Nabiha Rizalman',
+                                            'Amelia Rose',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               color: Colors.black,

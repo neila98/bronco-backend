@@ -1,10 +1,10 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
+import 'CustomShapeClipper.dart';
 import 'package:bronco2/HomePage/CustomAppBar.dart';
 import 'package:bronco2/Settings/settings.dart';
 import 'package:bronco2/screens/flightList.dart';
-import 'package:flutter/material.dart';
-import 'CustomShapeClipper.dart';
+
 
 Color firstColor = Color.fromRGBO(
   242,

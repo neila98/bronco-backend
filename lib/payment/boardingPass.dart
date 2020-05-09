@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:bronco2/Payment/InsertPayment.dart';
+//import 'package:bronco2/Payment/InsertPayment.dart';
 import 'package:bronco2/Payment/flightSummary.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 
@@ -84,7 +84,7 @@ class _BoardingPassState extends State<BoardingPass> {
                     Row(
                       children: <Widget>[
                         Text(
-                          'KUA',
+                          'BOS',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class _BoardingPassState extends State<BoardingPass> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            'JHB',
+                            'KUL',
                             style: TextStyle(
                              color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class _BoardingPassState extends State<BoardingPass> {
                   child: Column(
                     children: <Widget>[
                       ticketDetails(
-                        'Passengers', 'Nabiha Rizalman', 'Date', '24-12-2020'
+                        'Passengers', 'Amelia Rose', 'Date', '24-06-2019'
                       ),
                       Padding(
                         padding: const EdgeInsets.only(

@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBottomBar extends StatelessWidget {
@@ -5,6 +6,8 @@ class CustomAppBottomBar extends StatelessWidget {
 
   final bottomNavigationBarItemStyle =
       TextStyle(fontStyle: FontStyle.normal, color: Colors.white);
+
+  
 
   CustomAppBottomBar() {
     bottomBarItems.add(BottomNavigationBarItem(
@@ -28,6 +31,7 @@ class CustomAppBottomBar extends StatelessWidget {
           "My Bookings",
           style: bottomNavigationBarItemStyle,
         ),
+        
         
       ),
     );
