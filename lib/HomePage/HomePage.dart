@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bronco2/HomePage/CustomAppBar.dart';
 import 'package:bronco2/Settings/settings.dart';
-//import 'package:bronco2/screens/flightList.dart';
+import 'package:bronco2/screens/flightList.dart';
 import 'package:flutter/material.dart';
 import 'CustomShapeClipper.dart';
 
@@ -166,11 +166,11 @@ class _FirstSectionState extends State<FirstSection>
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      /*Navigator.push(
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                 FlightList()));*/
+                                                 FlightList()));
                                     },
                                     child: Icon(
                                       Icons.search,
