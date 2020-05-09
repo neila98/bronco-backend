@@ -22,11 +22,13 @@ class CustomAppBottomBar extends StatelessWidget {
         icon: new Icon(
           Icons.book,
           color: Colors.white,
+          
         ),
         title: Text(
           "My Bookings",
           style: bottomNavigationBarItemStyle,
         ),
+        
       ),
     );
 

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bronco2/HomePage/CustomAppBar.dart';
 import 'package:bronco2/Settings/settings.dart';
+//import 'package:bronco2/screens/flightList.dart';
 import 'package:flutter/material.dart';
 import 'CustomShapeClipper.dart';
 
@@ -161,9 +164,18 @@ class _FirstSectionState extends State<FirstSection>
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(30.0),
                                   ),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xff21254A),
+                                  child: InkWell(
+                                    onTap: () {
+                                      /*Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                 FlightList()));*/
+                                    },
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Color(0xff21254A),
+                                    ),
                                   ),
                                 ),
                                 border: InputBorder.none,
