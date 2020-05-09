@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:bronco2/Payment/animatedPay.dart';
+import 'package:bronco2/Payment/animatedPay.dart';
 import 'package:bronco2/HomePage/HomePage.dart';
 
 Color firstColor = Color.fromRGBO(
@@ -51,9 +51,6 @@ class _FlightSummaryState extends State<FlightSummary> {
                
           child: ListView(
             children: <Widget>[
-        
-       //SizedBox(height: 15.0),
-        
         SizedBox(height: 50.0),
          Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -123,7 +120,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
                   ),
                   onPressed: (){
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => PayConfirmation()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => PayConfirmation()));
                     
                   },
             ),
@@ -202,9 +199,9 @@ class _FlightSummaryState extends State<FlightSummary> {
  
  
 }
-/*Future navigateToPayConfirmation(context) async {
+Future navigateToPayConfirmation(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => PayConfirmation()));
-}*/
+}
 Future navigateToHomePage(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
 }

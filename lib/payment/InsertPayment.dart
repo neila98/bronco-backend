@@ -1,10 +1,10 @@
-//import 'package:bronco2/Payment/boardingPass.dart';
+import 'package:bronco2/Payment/boardingPass.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:bronco2/Payment/addNewCard.dart';
+import 'package:bronco2/Payment/addNewCard.dart';
 //import 'package:bronco2/HomePage/HomePage.dart';
-//import 'package:bronco2/Payment/animatedPay.dart';
+import 'package:bronco2/Payment/animatedPay.dart';
 
 
 Color firstColor = Color.fromRGBO(
@@ -41,7 +41,7 @@ class _InsertPaymentState extends State<InsertPayment> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
            onPressed:(){
-             //navigateToFlightSUmmary(context);
+             navigateToFlightSUmmary(context);
            } 
            ),
         title: Text(
@@ -281,7 +281,7 @@ class _InsertPaymentState extends State<InsertPayment> {
                                 
                                 child: FlatButton(
                                 onPressed: (){
-                                  //navigateToCardForm(context);
+                                  navigateToCardForm(context);
                                 },
                                 child: Text(
                                  'Add New Card',
@@ -306,9 +306,6 @@ class _InsertPaymentState extends State<InsertPayment> {
                                  width: MediaQuery.of(context).size.width,
                                  child: MaterialButton(
                                 onPressed: () => showSnackBar(context),
-                                  
-                                  //navigateToTicket(context);
-                                
                                child: Text(
                                  'Pay',
                                  style: TextStyle(
@@ -346,7 +343,7 @@ void showSnackBar(BuildContext context){
   Flushbar(
     mainButton: FlatButton(
       onPressed: (){
-        //navigateToTicket(context);
+        navigateToTicket(context);
       }, 
       
       child: Text(
@@ -383,10 +380,10 @@ void showSnackBar(BuildContext context){
 /*
 Future navigateToHomePage(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-}
+}*/
 Future navigateToTicket(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => BoardingPass()));
 }
 Future navigateToCardForm(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewCard(onCreditCardModelChange: (CreditCardModel ) {  },)));
-}*/
+}
