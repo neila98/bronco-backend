@@ -1,5 +1,5 @@
 import 'package:bronco2/HomePage/HomePage.dart';
-//import 'package:bronco2/screens/SignUpPage.dart';
+import 'package:bronco2/screens/SignUpPage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -187,8 +187,8 @@ Future navigateToHomePage(context) async {
 }
 
 Future navigateToSignUpPage(context) async {
- // Navigator.push(
-      //context, MaterialPageRoute(builder: (context) => SignUpPage()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => SignUpPage()));
 }
 
 showDialogBox(BuildContext context) {

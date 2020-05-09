@@ -1,30 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:bronco2/Settings/settings.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-Color firstColor = Color.fromRGBO(
-  242,
-  152,
-  152,
-  1,
-);
-Color secondColor = Color.fromRGBO(
-  209,
-  159,
-  228,
-  1,
-);
+class Item {
+  const Item(this.relationship);
+  final String relationship;
+}
 
 class UserProfile extends StatefulWidget {
   @override
   _UserProfileState createState() => _UserProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _UserProfileState extends State<UserProfile>
+    with SingleTickerProviderStateMixin {
+  bool _status = true;
+  final FocusNode myFocusNode = FocusNode();
+  String _date = "Not set";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Item selectedRelationship;
+    List<Item> rel = <Item>[
+      const Item('Mother'),
+      const Item('Father'),
+      const Item('Brother'),
+      const Item('Sister'),
+      const Item('Spouse'),
+      const Item('Friend'),
+    ];
+
     return Scaffold(
-        backgroundColor: Colors.pink[100],
-        body: ListView(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [secondColor, firstColor]),
+        ),
+        child: ListView(
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -47,7 +63,7 @@ class _UserProfileState extends State<UserProfile> {
                   child: IconButton(
                     icon: Icon(Icons.arrow_back_ios),
                     onPressed: () {
-                      navigateToSettings(context);
+                      Navigator.pop(context);
                     },
                     color: Colors.black,
                   ),
@@ -69,19 +85,17 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ),
                 Positioned(
-                  top: 55.0,
+                  top: 60.0,
                   left: (MediaQuery.of(context).size.width / 2 - 50.0),
                   child: Container(
                     height: 100.0,
                     width: 100.0,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      color: Color.fromRGBO(33, 37, 74, 1),
-
-                      //image: DecorationImage(
-                      //folder images baru
-                      // image: AssetImage('assets/profile.jpg'),
-                      //   fit: BoxFit.cover)
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                        image: new ExactAssetImage('assets/images/profile.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -92,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'CXXXX PXXXXXX',
+                        'Amelia Rose',
                         style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -148,6 +162,7 @@ class _UserProfileState extends State<UserProfile> {
                 )
               ],
             ),
+
             SizedBox(height: 15.0),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -162,28 +177,29 @@ class _UserProfileState extends State<UserProfile> {
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'see all',
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 15.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300),
-                  )
+                  new Column(
+                    //delete
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _status ? _getEditIcon() : new Container(),
+                    ],
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 12.0),
-            Column(
-              children: <Widget>[
-                SizedBox(height: 12.0),
-                menuCard('Email', 'bxxxx@gmail.com'),
-                SizedBox(height: 12.0),
-                menuCard('Contact Number', '+601 XXXXXXXX'),
-                SizedBox(height: 12.0),
-                menuCard('Password', 'XXXXXXXX'),
-              ],
-            ),
+            buildEmail(),
+
+            SizedBox(height: 12.0),
+            buildContactNumber(),
+
+            SizedBox(height: 12.0),
+            buildPassword(),
+            !_status ? _getActionButtons() : new Container(),
+
+            //break
+
             SizedBox(height: 50.0),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -199,35 +215,26 @@ class _UserProfileState extends State<UserProfile> {
                       color: Colors.black,
                     ),
                   ),
-                  Text(
-                    'see all',
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 15.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300),
-                  )
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _status ? _getEditIcon() : new Container(),
+                    ],
+                  ),
                 ],
               ),
             ),
+
             SizedBox(height: 12.0),
-            Column(
-              children: <Widget>[
-                SizedBox(height: 12.0),
-                getProfile('Personal Info', 'NXXXXX NXXXXXX', 'Date of Birth',
-                    '08/04/2020'),
-                SizedBox(height: 12.0),
-                getProfile('Country', 'MALAYSIA', 'Address',
-                    '37A JALAN JPS KG SKUDAI'),
-                SizedBox(height: 12.0),
-                getProfile(
-                    'Passport Number', 'AXXXXXXXX', 'Expires', '10/06/2020'),
-                SizedBox(height: 12.0),
-                getProfile('Emergency Contact', '+601 XXXXXXXX', 'Relationship',
-                    'Relative'),
-              ],
-            ),
-            SizedBox(height: 100.0),
+            buildName(),
+
+            SizedBox(height: 12.0),
+            buildDOB(context),
+            !_status ? _getActionButtons() : new Container(),
+
+            SizedBox(height: 80.0),
+
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: Row(
@@ -241,122 +248,421 @@ class _UserProfileState extends State<UserProfile> {
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'see all',
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 15.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300),
+                  new Column(
+                    //delete
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _status ? _getEditIcon() : new Container(),
+                    ],
                   )
                 ],
               ),
             ),
             SizedBox(height: 15.0),
+            InkWell(
+              onLongPress: () {
+                return setState(() {});
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Material(
+                  borderRadius: BorderRadius.circular(7.0),
+                  elevation: 4.0,
+                  child: Container(
+                    height: 160,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7.0),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0),
+                      child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: buildRelationship(selectedRelationship, rel),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            !_status ? _getActionButtons() : new Container(),
+            SizedBox(height: 50.0),
           ],
-        ));
-  }
-
-  Widget getProfile(String title, String type, String title1, String type1) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(7.0),
-        elevation: 4.0,
-        child: Container(
-          height: 125.0,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7.0), color: Colors.white),
-          child: Row(
-            children: <Widget>[
-              SizedBox(width: 10.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 15.0),
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 7.0),
-                  Text(
-                    type,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        color: Colors.grey,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(height: 15.0),
-                  Text(
-                    title1,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 7.0),
-                  Text(
-                    type1,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        color: Colors.grey,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              )
-            ],
-          ),
         ),
       ),
     );
   }
 
-  Widget menuCard(String title, String type) {
+  Padding buildDOB(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(7.0),
-        elevation: 4.0,
-        child: Container(
-          height: 125.0,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7.0), color: Colors.white),
-          child: Row(
-            children: <Widget>[
-              SizedBox(width: 10.0),
-              Column(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(7.0),
+          elevation: 4.0,
+          child: Container(
+            height: 125.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.0), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 15.0),
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold),
+                  new Text(
+                    'Date of Birth',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 7.0),
-                  Text(
-                    type,
-                    style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        color: Colors.grey,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400),
+                  SizedBox(height: 6.0),
+                  buildDatePicker(context),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Padding buildName() {
+    return Padding(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(7.0),
+          elevation: 4.0,
+          child: Container(
+            height: 125.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.0), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  new Text(
+                    'Full Name',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4.0),
+                  new Flexible(
+                    child: new TextField(
+                      decoration: const InputDecoration(
+                        hintText: "Enter Your Full Name",
+                      ),
+                      enabled: !_status,
+                      autofocus: !_status,
+                    ),
                   ),
                 ],
-              )
-            ],
+              ),
+            ),
           ),
+        ));
+  }
+
+  Padding buildPassword() {
+    return Padding(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(7.0),
+          elevation: 4.0,
+          child: Container(
+            height: 125.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.0), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  new Text(
+                    'Change Password',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4.0),
+                  new Flexible(
+                    child: new TextField(
+                      decoration: const InputDecoration(
+                        hintText: "Enter New Password",
+                      ),
+                      enabled: !_status,
+                      autofocus: !_status,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Padding buildContactNumber() {
+    return Padding(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(7.0),
+          elevation: 4.0,
+          child: Container(
+            height: 125.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.0), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  new Text(
+                    'Contact Number',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4.0),
+                  new Flexible(
+                    child: new TextField(
+                      decoration: const InputDecoration(
+                        hintText: "+601X-XXXXXX",
+                      ),
+                      enabled: !_status,
+                      autofocus: !_status,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Padding buildEmail() {
+    return Padding(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(7.0),
+          elevation: 4.0,
+          child: Container(
+            height: 125.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.0), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  new Text(
+                    'Email',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4.0),
+                  new Flexible(
+                    child: new TextField(
+                      decoration: const InputDecoration(
+                        hintText: "example@gmail.com",
+                      ),
+                      enabled: !_status,
+                      autofocus: !_status,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  List<Widget> buildRelationship(Item selectedRelationship, List<Item> rel) {
+    return <Widget>[
+      SizedBox(height: 15.0),
+      new Text(
+        'Name',
+        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 4.0),
+      new Flexible(
+        child: new TextField(
+          decoration: const InputDecoration(
+            hintText: "Enter Name",
+          ),
+          enabled: !_status,
+          autofocus: !_status,
         ),
       ),
+      SizedBox(height: 20.0),
+      new Text(
+        'Relationship',
+        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 4.0),
+      new Flexible(
+        child: new DropdownButton<Item>(
+            hint: Text('Select Relationship'),
+            value: selectedRelationship,
+            onChanged: (Item Value) {
+              setState(() {
+                selectedRelationship = Value;
+              });
+            },
+            items: rel.map((Item r) {
+              return DropdownMenuItem<Item>(
+                  child: Row(
+                children: <Widget>[
+                  Text(
+                    r.relationship,
+                    style: TextStyle(color: Colors.black),
+                  )
+                ],
+              ));
+            }).toList()),
+      ),
+      SizedBox(height: 10.0),
+    ];
+  }
+
+  RaisedButton buildDatePicker(BuildContext context) {
+    return RaisedButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      color: Colors.pink[100],
+      elevation: 4.0,
+      onPressed: () {
+        DatePicker.showDatePicker(context,
+            theme: DatePickerTheme(
+              containerHeight: 210.0,
+            ),
+            showTitleActions: true,
+            minTime: DateTime(1900, 1, 1),
+            maxTime: DateTime(2020, 01, 01), onConfirm: (date) {
+          print('confirm $date');
+          _date = '${date.day} - ${date.month} - ${date.year}';
+          setState(() {});
+        }, currentTime: DateTime.now(), locale: LocaleType.en);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 50.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.date_range,
+                        size: 18.0,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        " $_date",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "  Change",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    myFocusNode.dispose();
+    super.dispose();
+  }
+
+  Widget _getActionButtons() {
+    return Padding(
+      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Container(
+                  child: new RaisedButton(
+                child: new Text("Save"),
+                textColor: Colors.white,
+                color: Colors.green,
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  });
+                },
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0)),
+              )),
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Container(
+                  child: new RaisedButton(
+                child: new Text("Cancel"),
+                textColor: Colors.white,
+                color: Colors.red,
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  });
+                },
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0)),
+              )),
+            ),
+            flex: 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getEditIcon() {
+    return new GestureDetector(
+      child: new CircleAvatar(
+        backgroundColor: Colors.black,
+        radius: 16.0,
+        child: new Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 16.0,
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _status = false;
+        });
+      },
     );
   }
 }
