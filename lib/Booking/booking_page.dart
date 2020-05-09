@@ -1,7 +1,8 @@
-//import 'ticket_card (1).dart';
+import 'ticket_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-//import 'flight_stop_ticket.dart';
+import 'flight_stop_ticket.dart';
+import 'package:bronco2/Payment/flightSummary.dart';
 
 Color firstColor = Color.fromRGBO(
   242,
@@ -23,12 +24,12 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage>
     with TickerProviderStateMixin {
- /* List<FlightStopTicket> stops = [
+  List<FlightStopTicket> stops = [
     new FlightStopTicket(
         "Johor Bahru", "JHB", "Kuala Lumpur", "KUL", "KU2342", "12 Aug 2020"),
     new FlightStopTicket(
         "Kuala Lumpur", "KUL", "Penang", "PEN", "KU2341", "17 Nov 2020"),
-  ];*/
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,7 @@ class _BookingPageState extends State<BookingPage>
             icon: Icon(Icons.arrow_back_ios),
             color: Color(0xff21254A),
             onPressed: () {
-              //navigateToFlightSummary(context);
+              navigateToFlightSUmmary(context);
             }),
         title: Text(
           'My Bookings',
@@ -72,12 +73,12 @@ class _BookingPageState extends State<BookingPage>
   }
 
   Iterable<Widget> _buildTickets() {
-    /*return stops.map((stop) {
+    return stops.map((stop) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
        // child: TicketCard(stop: stop),
       );
-    });*/
+    });
   }
 
   /*_buildFab(){
@@ -87,4 +88,7 @@ class _BookingPageState extends State<BookingPage>
     );
   }*/
 
+}
+Future navigateToFlightSUmmary(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightSummary()));
 }

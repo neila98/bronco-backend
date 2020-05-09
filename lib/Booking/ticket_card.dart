@@ -1,4 +1,4 @@
-//import 'flight_stop_ticket.dart';
+import 'flight_stop_ticket.dart';
 import 'package:flutter/material.dart';
 
 class TicketCard extends StatelessWidget {
@@ -7,9 +7,9 @@ class TicketCard extends StatelessWidget {
   @override
   TicketCard createState() => new TicketCard();
 
- // final FlightStopTicket stop;
+  final FlightStopTicket stop;
 
-  //const TicketCard({Key key, this.stop}) : super(key: key);
+  const TicketCard({Key key, this.stop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +51,12 @@ class TicketCard extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    //child: Text(stop.from, style: airportName),
+                    child: Text(stop.from, style: airportName),
                   ),
-                  //Text(stop.fromShort, style: airportShortName),
+                  Text(stop.fromShort, style: airportShortName),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
-                    //child: Text(stop.date, style: flightDate),
+                    child: Text(stop.date, style: flightDate),
                   )
                 ],
               ),
@@ -73,7 +73,7 @@ class TicketCard extends StatelessWidget {
                   color: Colors.pinkAccent,
                 ),
               ),
-             //Text(stop.flightNumber, style: flightNum),
+             Text(stop.flightNumber, style: flightNum),
             ],
           ),
           Expanded(
@@ -84,9 +84,9 @@ class TicketCard extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    //child: Text(stop.to, style: airportName),
+                    child: Text(stop.to, style: airportName),
                   ),
-                  //Text(stop.toShort, style: airportShortName),
+                  Text(stop.toShort, style: airportShortName),
                   Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: new FlatButton(
