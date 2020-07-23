@@ -1,14 +1,45 @@
 import 'package:bronco2/HomePage/HomePage.dart';
 import 'package:bronco2/screens/SignUpPage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController emailInputController;
+  TextEditingController pwdInputController;
+
+  @override
+  initState() {
+    emailInputController = new TextEditingController();
+    pwdInputController = new TextEditingController();
+    super.initState();
+  }
+
+  String emailValidator(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Email format is invalid';
+    } else {
+      return null;
+    }
+  }
+
+  String pwdValidator(String value) {
+    if (value.length < 8) {
+      return 'Password must be longer than 8 characters';
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +102,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Email can't be empty";
-                              } else {}
-                              return null;
-                            },
+                            controller: emailInputController,
+                            validator: emailValidator,
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
@@ -96,14 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Password can't be empty";
-                              }
-
-                              return null;
-                            },
+                            controller: pwdInputController,
                             obscureText: true,
+                            validator: pwdValidator,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -132,10 +154,41 @@ class _LoginPageState extends State<LoginPage> {
                 FlatButton(
                     color: Color.fromRGBO(33, 37, 74, 1),
                     onPressed: () {
-                      _formKey.currentState.validate()
-                          ? showDialogBox(context)
-                          : Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Not valid!')));
+                      if (_formKey.currentState.validate()) {
+                        FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: emailInputController.text,
+                                password: pwdInputController.text)
+                            .then((currentUser) => Firestore.instance
+                                .collection("user")
+                                .document(currentUser.uid)
+                                .get()
+                                .then((DocumentSnapshot result) =>
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomePage())))
+                                .catchError((err) => print(err)))
+                            .catchError((err) => print(err));
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Error"),
+                                content: Text(
+                                    "Email or password entered is incorrect. Try again."),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            });
+                      }
                     },
                     child: Container(
                       height: 50,

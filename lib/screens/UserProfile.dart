@@ -8,6 +8,10 @@ class Item {
 }
 
 class UserProfile extends StatefulWidget {
+  UserProfile({Key key, this.fname, this.surname}) : super(key: key);
+  final String fname;
+  final String surname;
+
   @override
   _UserProfileState createState() => _UserProfileState();
 }

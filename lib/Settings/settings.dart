@@ -66,7 +66,7 @@ class _Top extends State<Top> {
                               onPressed: () => navigateToHomePage(context),
                               //{
 
-                                //Navigator.pop(context);
+                              //Navigator.pop(context);
                               //},
                               color: Colors.black,
                             ),
@@ -110,7 +110,6 @@ class _Top extends State<Top> {
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                          
                           Card(
                             margin:
                                 const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
@@ -124,7 +123,8 @@ class _Top extends State<Top> {
                                       color: Color.fromRGBO(33, 37, 74, 1)),
                                   title: Text("My Bookings"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () => navigateToBookings(context), //go to change password
+                                  onTap: () => navigateToBookings(
+                                      context), //go to change password
                                 ),
                                 Container(
                                     width: double.infinity,
@@ -274,6 +274,8 @@ showAlertDialog(BuildContext context) {
     },
   );
 }
+
 Future navigateToBookings(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => BookingPage()));
 }
