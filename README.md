@@ -4,6 +4,17 @@ Project Title
 
 Bronco Airlines: A Flight Booking App
 
+Project Synopsis
+----------------
+
+The Airborne Reservation System (ARS) is an evolved system where the previous one was known as Global Distribution System (GDS) that aims to provide reservation  for a particular airline. GDS implements an interface that supports travel agencies and other distribution channel in making airline reservation through single system.
+
+ARS is a computer-aided systems where user does not require to face a lenghty queues for bookings. In overall, it hold airlines schedule, fare tariffs, passenger reservations and ticket records. The one who has a main authority in the system is the admin.
+
+This projecta have a centralized storage of database by applying the view of distributed architecture. SQL Connector acts a database connectivity. It has been developed by keeping in view of the distributed cliend computer technology. The user interfaces are browser specific to provide distributed accesebility for overall system. Database MySQL is the internal database.
+
+Besides that, the project focuses on various feature for reservation system like online registration, modifying details, and others. It has been designed to perform such task that as similar to other online ticketing application.
+
 Group Members:
 --------------
 
@@ -14,7 +25,7 @@ Group Members:
 
 Youtube URL:
 ------------
-https://youtu.be/NAh0BjwDEgQ 
+
 
 Screen:
 ------------

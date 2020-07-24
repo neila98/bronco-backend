@@ -5,7 +5,6 @@ import 'package:bronco2/HomePage/CustomAppBar.dart';
 import 'package:bronco2/Settings/settings.dart';
 import 'package:bronco2/screens/flightList.dart';
 
-
 Color firstColor = Color.fromRGBO(
   242,
   152,
@@ -45,7 +44,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: CustomAppBottomBar(),
+        bottomNavigationBar: CustomAppBottomBar(context),
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xff21254A),
         body: Column(
@@ -170,7 +169,7 @@ class _FirstSectionState extends State<FirstSection>
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                 FlightList()));
+                                                  FlightList()));
                                     },
                                     child: Icon(
                                       Icons.search,

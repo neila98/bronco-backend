@@ -1,3 +1,7 @@
+import 'package:bronco2/models/user_model.dart';
+import 'package:bronco2/services/users_data_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bronco2/Settings/settings.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -8,37 +12,72 @@ class Item {
 }
 
 class UserProfile extends StatefulWidget {
-  UserProfile({Key key, this.fname, this.surname}) : super(key: key);
-  final String fname;
-  final String surname;
-
   @override
   _UserProfileState createState() => _UserProfileState();
 }
 
 class _UserProfileState extends State<UserProfile>
     with SingleTickerProviderStateMixin {
+  Item selectedRelationship;
+  List<Item> rel = <Item>[
+    const Item('Mother'),
+    const Item('Father'),
+    const Item('Brother'),
+    const Item('Sister'),
+    const Item('Spouse'),
+    const Item('Friend'),
+  ];
+
+  List<User> alluser;
+  final dataService = UserDataService();
+
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
   String _date = "Not set";
 
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  Future<String> getUid() async {
+    return (await _firebaseAuth.currentUser()).uid;
+  }
+
+  String fname, email, surname, password;
+
   @override
   void initState() {
     super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    await Future.delayed(Duration(milliseconds: 0));
+    final uid = await getUid();
+    final map =
+        await Firestore.instance.collection('users').document(uid).get();
+    print(map.data);
+
+    setState(() {
+      fname = map.data['fname'];
+      email = map.data['email'];
+      surname = map.data['surname'];
+      password = map.data['password'];
+    });
+    return uid;
   }
 
   @override
   Widget build(BuildContext context) {
-    Item selectedRelationship;
-    List<Item> rel = <Item>[
-      const Item('Mother'),
-      const Item('Father'),
-      const Item('Brother'),
-      const Item('Sister'),
-      const Item('Spouse'),
-      const Item('Friend'),
-    ];
+    return FutureBuilder<List<User>>(
+        future: dataService.getAllUser(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            alluser = snapshot.data;
+            return _profileScreen();
+          }
+          return _profileScreen();
+        });
+  }
 
+  Scaffold _profileScreen() {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -109,8 +148,9 @@ class _UserProfileState extends State<UserProfile>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      // final profile = _profiles[index];
                       Text(
-                        'Amelia Rose',
+                        fname ?? "Loading...",
                         style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -195,11 +235,11 @@ class _UserProfileState extends State<UserProfile>
             SizedBox(height: 12.0),
             buildEmail(),
 
-            SizedBox(height: 12.0),
-            buildContactNumber(),
+            // SizedBox(height: 12.0),
+            // buildContactNumber(),
 
-            SizedBox(height: 12.0),
-            buildPassword(),
+            //SizedBox(height: 12.0),
+            //buildPassword(),
             !_status ? _getActionButtons() : new Container(),
 
             //break
@@ -283,7 +323,7 @@ class _UserProfileState extends State<UserProfile>
                       padding: const EdgeInsets.symmetric(horizontal: 9.0),
                       child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: buildRelationship(selectedRelationship, rel),
+                        //children: buildRelationship(selectedRelationship, rel),
                       ),
                     ),
                   ),
@@ -349,16 +389,20 @@ class _UserProfileState extends State<UserProfile>
                   new Text(
                     'Full Name',
                     style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 4.0),
                   new Flexible(
-                    child: new TextField(
-                      decoration: const InputDecoration(
-                        hintText: "Enter Your Full Name",
-                      ),
-                      enabled: !_status,
-                      autofocus: !_status,
+                    child: new Text(
+                      fname ?? "Loading...",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.normal),
+
+                      //decoration: const InputDecoration(
+                      //hintText: "Enter Your Full Name",
+                      //),
+                      //enabled: !_status,
+                      //autofocus: !_status,
                     ),
                   ),
                 ],
@@ -464,20 +508,23 @@ class _UserProfileState extends State<UserProfile>
                 children: <Widget>[
                   SizedBox(height: 15.0),
                   new Text(
-                    'Email',
+                    "Email",
                     style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 4.0),
                   new Flexible(
-                    child: new TextField(
-                      decoration: const InputDecoration(
-                        hintText: "example@gmail.com",
-                      ),
-                      enabled: !_status,
-                      autofocus: !_status,
+                    child: new Text(
+                      email ?? "Loading...",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.normal),
+                      //decoration: const InputDecoration(
+                      //hintText: "example@gmail.com",
                     ),
+                    //enabled: !_status,
+                    //autofocus: !_status,
                   ),
+                  //),
                 ],
               ),
             ),
@@ -512,9 +559,9 @@ class _UserProfileState extends State<UserProfile>
         child: new DropdownButton<Item>(
             hint: Text('Select Relationship'),
             value: selectedRelationship,
-            onChanged: (Item Value) {
+            onChanged: (Item value) {
               setState(() {
-                selectedRelationship = Value;
+                selectedRelationship = value;
               });
             },
             items: rel.map((Item r) {

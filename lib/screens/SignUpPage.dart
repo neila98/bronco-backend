@@ -1,4 +1,5 @@
 import 'package:bronco2/HomePage/HomePage.dart';
+import 'package:bronco2/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,17 +13,23 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
-  TextEditingController firstNameInputController;
-  TextEditingController lastNameInputController;
-  TextEditingController emailInputController;
-  TextEditingController pwdInputController;
+
+  final TextEditingController firstNameInputController = TextEditingController();
+  final TextEditingController lastNameInputController = TextEditingController();
+  final TextEditingController emailInputController = TextEditingController();
+  final TextEditingController pwdInputController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _firestore = Firestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  Future<String> getCurrentUID() async {
+    return (await _firebaseAuth.currentUser()).uid;
+  }
+
+  bool _success;
+  String _userEmail;
 
   @override
   initState() {
-    firstNameInputController = new TextEditingController();
-    lastNameInputController = new TextEditingController();
-    emailInputController = new TextEditingController();
-    pwdInputController = new TextEditingController();
     super.initState();
   }
 
@@ -91,90 +98,92 @@ class _SignUpPageState extends State<SignUpPage> {
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.transparent,
                   ),
-                  child: Form(
-                    key: _signupFormKey,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[100],
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _signupFormKey,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey[100],
+                                ),
                               ),
                             ),
-                          ),
-                          child: TextFormField(
-                            controller: firstNameInputController,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "First Name",
-                              hintStyle: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[100],
-                              ),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: lastNameInputController,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Last Name",
-                              hintStyle: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[100],
-                              ),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: emailInputController,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: emailValidator,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Email",
-                              hintStyle: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[100],
-                              ),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: pwdInputController,
-                            obscureText: true,
-                            validator: pwdValidator,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
+                            child: TextFormField(
+                              controller: firstNameInputController,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Create Password",
-                                hintStyle: TextStyle(color: Colors.white)),
+                                hintText: "First Name",
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ),
-                        )
-                      ],
+                          Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                            child: TextFormField(
+                              controller: lastNameInputController,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Last Name",
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                            child: TextFormField(
+                              controller: emailInputController,
+                              keyboardType: TextInputType.emailAddress,
+                              validator: emailValidator,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Email",
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                            child: TextFormField(
+                              controller: pwdInputController,
+                              obscureText: true,
+                              validator: pwdValidator,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Create Password",
+                                  hintStyle: TextStyle(color: Colors.white)),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -186,53 +195,61 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 FlatButton(
                     color: Color.fromRGBO(33, 37, 74, 1),
-                    onPressed: () {
+                    onPressed: () async {
                       //navigateToHomePage(context);
                       if (_signupFormKey.currentState.validate()) {
-                        FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text)
-                            .then((currentUser) => Firestore.instance
-                                .collection("user")
-                                .document(currentUser.uid)
-                                .setData({
-                                  "uid": currentUser.uid,
-                                  "fname": firstNameInputController.text,
-                                  "surname": lastNameInputController.text,
-                                  "email": emailInputController.text,
-                                  "password": pwdInputController.text,
-                                })
-                                .then((result) => {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => HomePage()),
-                                          (_) => false),
-                                      firstNameInputController.clear(),
-                                      lastNameInputController.clear(),
-                                      emailInputController.clear(),
-                                      pwdInputController.clear(),
-                                    })
-                                .catchError((err) => print(err)))
-                            .catchError((err) => print(err));
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text("Error"),
-                                content: Text("Try Again"),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  )
-                                ],
+                        // setState(() {
+                        //   _register();
+                        // });
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return new LoginPage();
+                        // }));
+                          _firebaseAuth
+                              .createUserWithEmailAndPassword(
+                                  email: emailInputController.text,
+                                  password: pwdInputController.text)
+                              .then((currentUser) => Firestore.instance
+                                  .collection("users")
+                                  .document(currentUser.uid)
+                                  .setData({
+                                    "uid": currentUser.uid,
+                                    "fname": firstNameInputController.text,
+                                    "surname": lastNameInputController.text,
+                                    "email": emailInputController.text,
+                                    "password": pwdInputController.text,
+                                  })
+                                  .then((result) => {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => LoginPage()),
+                                            (_) => false),
+                                        firstNameInputController.clear(),
+                                        lastNameInputController.clear(),
+                                        emailInputController.clear(),
+                                        pwdInputController.clear(),
+                                      })
+                              //     .catchError((err) => print(err)))
+                              // .catchError((err) => print(err)
                               );
-                            });
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Try Again"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text("Close"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
                       }
                     },
                     child: Container(
@@ -261,6 +278,38 @@ class _SignUpPageState extends State<SignUpPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    emailInputController.dispose();
+    pwdInputController.dispose();
+    super.dispose();
+  }
+
+  void _register() async {
+    final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+      email: emailInputController.text,
+      password: pwdInputController.text,
+    ));
+    if (user != null) {
+      setState(() async {
+        _success = true;
+        _userEmail = user.email;
+        final currentuid = await getCurrentUID();
+        _firestore.collection('users').document(currentuid).setData({
+          // 'contactno': _contactController.text.toString(),
+          // 'dob': _ageController.text.toString(),
+          'email': emailInputController.text.toString(),
+          'fname': firstNameInputController.text.toString(),
+          'surname': lastNameInputController.text.toString(),
+          // 'fullname': _schoolController.text.toString(),
+          'password': pwdInputController.text.toString(),
+        });
+      });
+    } else {
+      _success = false;
+    }
   }
 }
 

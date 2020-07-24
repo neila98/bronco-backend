@@ -12,13 +12,31 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController emailInputController;
-  TextEditingController pwdInputController;
+  final TextEditingController emailInputController = TextEditingController();
+  final TextEditingController pwdInputController = TextEditingController();
+  bool _success;
+  String _userEmail;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  Future<String> getUid() async {
+    return (await _firebaseAuth.currentUser()).uid;
+  }
+
+  Stream<String> get onAuthStateChanged => _firebaseAuth.onAuthStateChanged.map(
+        (FirebaseUser user) => user?.uid,
+      );
+
+  Future<String> signInWithEmailAndPassword(
+      String emailInputController, String pwdInputController) async {
+    return (await _firebaseAuth.signInWithEmailAndPassword(
+            email: emailInputController, password: pwdInputController))
+        // .user
+        .uid;
+  }
+
+  final firestore = Firestore.instance;
 
   @override
   initState() {
-    emailInputController = new TextEditingController();
-    pwdInputController = new TextEditingController();
     super.initState();
   }
 
@@ -153,23 +171,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 FlatButton(
                     color: Color.fromRGBO(33, 37, 74, 1),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text)
-                            .then((currentUser) => Firestore.instance
-                                .collection("user")
-                                .document(currentUser.uid)
-                                .get()
-                                .then((DocumentSnapshot result) =>
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomePage())))
-                                .catchError((err) => print(err)))
-                            .catchError((err) => print(err));
+                        // _signin();
+                        String uid = await signInWithEmailAndPassword(
+                            emailInputController.text, pwdInputController.text);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return new HomePage();
+                        }));
+                        print("Signed In with ID $uid");
                       } else {
                         showDialog(
                             context: context,
@@ -233,6 +244,29 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  // void _signin() async {
+  //   final FirebaseUser user = (await _firebaseAuth.signInWithEmailAndPassword(
+  //     email: emailInputController.text,
+  //     password: pwdInputController.text,
+  //   ));
+  //   if (user != null) {
+  //     setState(() async {
+  //       _success = true;
+  //       _userEmail = user.email;
+  //       final currentUseruid = await getUid();
+  //       firestore.collection("users").document(currentUseruid).get().then(
+  //           (DocumentSnapshot result) =>
+  //               Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //                 return new HomePage();
+  //               })));
+  //       // .catchError((err) => print(err))
+  //       // .catchError((err) => print(err));
+  //     });
+  //   } else {
+  //     _success = false;
+  //   }
+  // }
 }
 
 Future navigateToHomePage(context) async {

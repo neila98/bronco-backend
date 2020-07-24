@@ -1,4 +1,6 @@
-import 'package:flushbar/flushbar.dart';
+import 'package:bronco2/Booking/booking_page.dart';
+import 'package:bronco2/screens/LoginPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBottomBar extends StatelessWidget {
@@ -7,9 +9,7 @@ class CustomAppBottomBar extends StatelessWidget {
   final bottomNavigationBarItemStyle =
       TextStyle(fontStyle: FontStyle.normal, color: Colors.white);
 
-  
-
-  CustomAppBottomBar() {
+  CustomAppBottomBar(BuildContext context) {
     bottomBarItems.add(BottomNavigationBarItem(
       icon: Icon(
         Icons.flight,
@@ -22,25 +22,40 @@ class CustomAppBottomBar extends StatelessWidget {
     ));
     bottomBarItems.add(
       new BottomNavigationBarItem(
-        icon: new Icon(
-          Icons.book,
-          color: Colors.white,
-          
+        icon: FlatButton(
+          child: new Icon(
+            Icons.book,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            FirebaseAuth.instance
+                .signOut()
+                .then((result) => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BookingPage())))
+                .catchError((err) => print(err));
+          },
         ),
         title: Text(
           "My Bookings",
           style: bottomNavigationBarItemStyle,
         ),
-        
-        
       ),
     );
 
     bottomBarItems.add(
       new BottomNavigationBarItem(
-        icon: new Icon(
-          Icons.directions_run,
-          color: Colors.white,
+        icon: FlatButton(
+          child: new Icon(
+            Icons.directions_run,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            FirebaseAuth.instance
+                .signOut()
+                .then((result) => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage())))
+                .catchError((err) => print(err));
+          },
         ),
         title: Text(
           "Logout",

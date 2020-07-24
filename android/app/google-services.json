@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "496131512987",
-    "firebase_url": "https://bronco-backend.firebaseio.com",
-    "project_id": "bronco-backend",
-    "storage_bucket": "bronco-backend.appspot.com"
+    "project_number": "981549522920",
+    "firebase_url": "https://bronco-pr3-map.firebaseio.com",
+    "project_id": "bronco-pr3-map",
+    "storage_bucket": "bronco-pr3-map.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:496131512987:android:74bc8b8b673fb69a3f443e",
+        "mobilesdk_app_id": "1:981549522920:android:069e85fb4117a7c5ea0e5d",
         "android_client_info": {
           "package_name": "com.example.bronco"
         }
       },
       "oauth_client": [
         {
-          "client_id": "496131512987-n0eqdl1sdr4bk5gq099v32puol9qsfnv.apps.googleusercontent.com",
+          "client_id": "981549522920-4shlll16m4phegp1fbc8u1gepcdggjqn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCEcE5Non9LiZRsuDo4QTfkSY4U_9OagTM"
+          "current_key": "AIzaSyCzkYLsEplwy2kUG5HoMruElMwdnAlsvgE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "496131512987-n0eqdl1sdr4bk5gq099v32puol9qsfnv.apps.googleusercontent.com",
+              "client_id": "981549522920-4shlll16m4phegp1fbc8u1gepcdggjqn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
