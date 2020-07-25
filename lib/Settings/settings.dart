@@ -1,3 +1,4 @@
+import 'package:bronco2/Settings/travelInfo.dart';
 import 'package:bronco2/screens/LoginPage.dart';
 import 'package:bronco2/screens/UserProfile.dart';
 import 'package:flutter/material.dart';
@@ -186,49 +187,51 @@ var below = Column(children: <Widget>[
   ),
   Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              margin: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.card_travel,
-                        color: Color.fromRGBO(33, 37, 74, 1)),
-                    title: Text("About Us"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {}, //go to change password
-                  ),
-                  Container(
-                      width: double.infinity,
-                      height: 1.0,
-                      color: Color.fromRGBO(33, 37, 74, 1)),
-                  ListTile(
-                    leading: Icon(Icons.flight_land,
-                        color: Color.fromRGBO(33, 37, 74, 1)),
-                    title: Text("Products and Services"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {}, //go to change password
-                  ),
-                  Container(
-                      width: double.infinity,
-                      height: 1.0,
-                      color: Color.fromRGBO(33, 37, 74, 1)),
-                  ListTile(
-                    leading: Icon(Icons.flight_takeoff,
-                        color: Color.fromRGBO(33, 37, 74, 1)),
-                    title: Text("Travel Information"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {}, //go to change password
-                  ),
-                ],
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+          Widget>[
+        Card(
+          margin: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.card_travel,
+                    color: Color.fromRGBO(33, 37, 74, 1)),
+                title: Text("About Us"),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {}, //go to change password
               ),
-            ),
-          ]))
+              Container(
+                  width: double.infinity,
+                  height: 1.0,
+                  color: Color.fromRGBO(33, 37, 74, 1)),
+              ListTile(
+                leading: Icon(Icons.flight_land,
+                    color: Color.fromRGBO(33, 37, 74, 1)),
+                title: Text("Products and Services"),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {}, //go to change password
+              ),
+              Container(
+                  width: double.infinity,
+                  height: 1.0,
+                  color: Color.fromRGBO(33, 37, 74, 1)),
+              ListTile(
+                leading: Icon(Icons.flight_takeoff,
+                    color: Color.fromRGBO(33, 37, 74, 1)),
+                title: Text("Travel Information"),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TravelInfo()));
+                }, //go to change password
+              ),
+            ],
+          ),
+        ),
+      ]))
 ]);
 
 Future navigateToProfile(context) async {
