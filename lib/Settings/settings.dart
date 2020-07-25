@@ -1,6 +1,7 @@
 import 'package:bronco2/Settings/travelInfo.dart';
 import 'package:bronco2/screens/LoginPage.dart';
 import 'package:bronco2/screens/UserProfile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bronco2/Booking/booking_page.dart';
 import 'package:bronco2/HomePage/CustomShapeClipper.dart';
@@ -27,18 +28,29 @@ class Settings extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Top(),
-            below,
+            Below(),
           ],
         ));
   }
 }
 
 class Top extends StatefulWidget {
+  Top({Key key, this.uid}) : super(key: key);
+  final String uid;
+
   @override
   _Top createState() => _Top();
 }
 
 class _Top extends State<Top> {
+  TextEditingController pwdInputController;
+
+  @override
+  void initState() {
+    pwdInputController = new TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -124,19 +136,7 @@ class _Top extends State<Top> {
                                       color: Color.fromRGBO(33, 37, 74, 1)),
                                   title: Text("My Bookings"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () => navigateToBookings(
-                                      context), //go to change password
-                                ),
-                                Container(
-                                    width: double.infinity,
-                                    height: 1.0,
-                                    color: Color.fromRGBO(33, 37, 74, 1)),
-                                ListTile(
-                                  leading: Icon(Icons.keyboard,
-                                      color: Color.fromRGBO(33, 37, 74, 1)),
-                                  title: Text("Change Username"),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {}, //go to change password
+                                  onTap: () => navigateToBookings(context),
                                 ),
                                 Container(
                                     width: double.infinity,
@@ -162,77 +162,99 @@ class _Top extends State<Top> {
   }
 }
 
-var below = Column(children: <Widget>[
-  Padding(
-    padding: const EdgeInsets.symmetric(
-      horizontal: 32.0,
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+class Below extends StatefulWidget {
+  Below({Key key, this.uid}) : super(key: key);
+  final String uid;
+
+  @override
+  _Below createState() => _Below();
+}
+
+class _Below extends State<Below> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
       children: <Widget>[
-        SizedBox(
-          height: 10,
-        ),
-        Text("About Us",
-            style: TextStyle(
-              fontSize: 24.0,
-              color: Colors.pink[100],
-            )),
-        SizedBox(height: 10),
+        Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("About Us",
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        color: Colors.pink[100],
+                      )),
+                  SizedBox(height: 10),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Card(
+                        margin: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.card_travel,
+                                  color: Color.fromRGBO(33, 37, 74, 1)),
+                              title: Text("About Us"),
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              onTap: () {},
+                            ),
+                            Container(
+                                width: double.infinity,
+                                height: 1.0,
+                                color: Color.fromRGBO(33, 37, 74, 1)),
+                            ListTile(
+                              leading: Icon(Icons.flight_land,
+                                  color: Color.fromRGBO(33, 37, 74, 1)),
+                              title: Text("Products and Services"),
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              onTap: () {},
+                            ),
+                            Container(
+                                width: double.infinity,
+                                height: 1.0,
+                                color: Color.fromRGBO(33, 37, 74, 1)),
+                            ListTile(
+                              leading: Icon(Icons.flight_takeoff,
+                                  color: Color.fromRGBO(33, 37, 74, 1)),
+                              title: Text("Travel Information"),
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TravelInfo()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]))
+          ],
+        )
       ],
-    ),
-  ),
-  SizedBox(
-    height: 20,
-  ),
-  Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-          Widget>[
-        Card(
-          margin: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-          elevation: 4.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.card_travel,
-                    color: Color.fromRGBO(33, 37, 74, 1)),
-                title: Text("About Us"),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                onTap: () {}, //go to change password
-              ),
-              Container(
-                  width: double.infinity,
-                  height: 1.0,
-                  color: Color.fromRGBO(33, 37, 74, 1)),
-              ListTile(
-                leading: Icon(Icons.flight_land,
-                    color: Color.fromRGBO(33, 37, 74, 1)),
-                title: Text("Products and Services"),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                onTap: () {}, //go to change password
-              ),
-              Container(
-                  width: double.infinity,
-                  height: 1.0,
-                  color: Color.fromRGBO(33, 37, 74, 1)),
-              ListTile(
-                leading: Icon(Icons.flight_takeoff,
-                    color: Color.fromRGBO(33, 37, 74, 1)),
-                title: Text("Travel Information"),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TravelInfo()));
-                }, //go to change password
-              ),
-            ],
-          ),
-        ),
-      ]))
-]);
+    );
+  }
+}
 
 Future navigateToProfile(context) async {
   Navigator.push(
