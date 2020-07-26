@@ -1,4 +1,5 @@
 import 'package:bronco2/Payment/boardingPass.dart';
+import 'package:bronco2/payment/cardList.dart';
 import 'package:bronco2/services/card_data_service.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -69,16 +70,26 @@ class _InsertPaymentState extends State<InsertPayment>
   var index = 0;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Card>>(
-      //future: dataService.getAllCard(),
+    /*return FutureBuilder<List<Card>>(
+      future: dataService.getAllCard(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData){
           allCard = snapshot.data;
           return _cardScreen();
         }
         return _cardScreen();
       },
-    );
+
+    );*/
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('cards').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _cardScreen();
+          } else {
+            return _cardScreen();
+          }
+        });
   }
 
   Scaffold _cardScreen() {
@@ -311,6 +322,31 @@ class _InsertPaymentState extends State<InsertPayment>
                           },
                           child: Text(
                             'Add New Card',
+                            style: TextStyle(
+                              fontFamily: 'Comforta',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              color: Color.fromRGBO(33, 37, 74, 1),
+                            ),
+                          ),
+                          color: firstColor,
+                          hoverColor: Colors.blueGrey[50],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CardList()));
+                          },
+                          child: Text(
+                            'View Registered Card',
                             style: TextStyle(
                               fontFamily: 'Comforta',
                               fontWeight: FontWeight.bold,
