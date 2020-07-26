@@ -4,15 +4,16 @@ import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CardList extends StatefulWidget {
-  get context => clist;
+  //get context => clist;
   @override
   _CardListState createState() => _CardListState();
 
-  const CardList({Key key, this.clist}) : super(key: key);
-  final Card clist;
+  // const CardList({Key key, this.clist}) : super(key: key);
+  //final Card clist;
 }
 
 class _CardListState extends State<CardList> {
+  final FocusNode myFocusNode = FocusNode();
   var _appBarColor = Color(0xff21254A);
   //final Card clist;
   @override
@@ -25,50 +26,50 @@ class _CardListState extends State<CardList> {
               Navigator.pop(context);
             }),
         title: Text(
-          "About Us",
+          "Registered Card List",
           textAlign: TextAlign.center,
         ),
         backgroundColor: _appBarColor,
         centerTitle: true,
       ),
-      body: Dismissible(
-          key: new ObjectKey(context),
-          child: Row(
-            children: <Widget>[
-              StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection('cards').snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) return new Text("Loading ...");
-
-                    {
-                      return Column(
-                        children: snapshot.data.documents.map((doc) {
-                          return ListTile(title: Text(doc.data['cardNum']));
-                        }).toList(),
+      body: //Dismissible(
+          //key: new ObjectKey(context),
+          //child:
+          ListView(
+        padding: EdgeInsets.all(12.0),
+        children: <Widget>[
+          Text('Registered Card Number',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold)),
+          StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('cards').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: snapshot.data.documents.map((doc) {
+                      return ListTile(
+                        title: Text(doc.data['cardNum']),
+                        onLongPress: () =>
+                            _showConfirmationDialog(context, 'delete'),
                       );
-                    }
-                    /* else {
+                    }).toList(),
+                  );
+                } else {
                   return SizedBox();
-                }*/
-                  })
-            ],
-          ),
-          confirmDismiss: (DismissDirection dismissDirection) async {
-            switch (dismissDirection) {
-              case DismissDirection.endToStart:
-              case DismissDirection.startToEnd:
-                return await _showConfirmationDialog(context, 'delete') == true;
-              case DismissDirection.horizontal:
-              case DismissDirection.vertical:
-              case DismissDirection.up:
-              case DismissDirection.down:
-                assert(false);
-
-                break;
-            }
-            return false;
-          }),
+                }
+              }),
+        ],
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    myFocusNode.dispose();
+    super.dispose();
   }
 }
 
@@ -88,8 +89,8 @@ Future<bool> _showConfirmationDialog(BuildContext context, String action) {
           FlatButton(
             child: const Text('Yes'),
             onPressed: () {
-              Firestore.instance.collection('cardNum').document('').delete();
-              //Navigator.pop(context, true); // showDialog() returns true
+              //Firestore.instance.collection('cards').document('cardNum').delete();
+              Navigator.pop(context, true); // showDialog() returns true
             },
           ),
           FlatButton(
