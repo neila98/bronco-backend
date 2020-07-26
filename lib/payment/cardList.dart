@@ -13,46 +13,62 @@ class CardList extends StatefulWidget {
 }
 
 class _CardListState extends State<CardList> {
+  var _appBarColor = Color(0xff21254A);
   //final Card clist;
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-        key: new ObjectKey(context),
-        child: Row(
-          children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection('cards').snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) return new Text("Loading ...");
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        title: Text(
+          "About Us",
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: _appBarColor,
+        centerTitle: true,
+      ),
+      body: Dismissible(
+          key: new ObjectKey(context),
+          child: Row(
+            children: <Widget>[
+              StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection('cards').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) return new Text("Loading ...");
 
-                  {
-                    return Column(
-                      children: snapshot.data.documents.map((doc) {
-                        return ListTile(title: Text(doc.data['cardNum']));
-                      }).toList(),
-                    );
-                  }
-                  /* else {
+                    {
+                      return Column(
+                        children: snapshot.data.documents.map((doc) {
+                          return ListTile(title: Text(doc.data['cardNum']));
+                        }).toList(),
+                      );
+                    }
+                    /* else {
                   return SizedBox();
                 }*/
-                })
-          ],
-        ),
-        confirmDismiss: (DismissDirection dismissDirection) async {
-          switch (dismissDirection) {
-            case DismissDirection.endToStart:
-            case DismissDirection.startToEnd:
-              return await _showConfirmationDialog(context, 'delete') == true;
-            case DismissDirection.horizontal:
-            case DismissDirection.vertical:
-            case DismissDirection.up:
-            case DismissDirection.down:
-              assert(false);
+                  })
+            ],
+          ),
+          confirmDismiss: (DismissDirection dismissDirection) async {
+            switch (dismissDirection) {
+              case DismissDirection.endToStart:
+              case DismissDirection.startToEnd:
+                return await _showConfirmationDialog(context, 'delete') == true;
+              case DismissDirection.horizontal:
+              case DismissDirection.vertical:
+              case DismissDirection.up:
+              case DismissDirection.down:
+                assert(false);
 
-              break;
-          }
-          return false;
-        });
+                break;
+            }
+            return false;
+          }),
+    );
   }
 }
 
