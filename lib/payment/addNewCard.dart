@@ -157,118 +157,120 @@ class _AddNewCardState extends State<AddNewCard> {
       ),
       resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xff21254A),
-      body: Form(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [firstColor, secondColor])),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 30.0),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                child: TextFormField(
-                  controller: _cardNumController,
-                  cursorColor: widget.cursorColor ?? themeColor,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Card Number',
-                    hintText: '**** **** **** ****',
-                  ),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-                child: TextFormField(
-                  controller: _expiryDateController,
-                  cursorColor: widget.cursorColor ?? themeColor,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Expiry Date',
-                    hintText: 'MM/YY',
-                  ),
-                  keyboardType: TextInputType.datetime,
-                  textInputAction: TextInputAction.next,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-                child: TextFormField(
-                  controller: _cvvController,
-                  //focusNode: cvvFocusNode,
-                  cursorColor: widget.cursorColor ?? themeColor,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'CVV',
-                    hintText: '***',
-                  ),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  onChanged: (String text) {
-                    setState(() {
-                      cvv = text;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-                child: TextFormField(
-                  controller: _cardHolderController,
-                  cursorColor: widget.cursorColor ?? themeColor,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Card Holder',
-                  ),
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                width: 300.0,
-                child: MaterialButton(
-                  child: Text(
-                    'Save Card',
+      body: SingleChildScrollView(
+        child: Form(
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [firstColor, secondColor])),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 30.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextFormField(
+                    controller: _cardNumController,
+                    cursorColor: widget.cursorColor ?? themeColor,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Card Number',
+                      hintText: '** ** ** **',
+                    ),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
                   ),
-                  color: Color.fromRGBO(33, 37, 74, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  onPressed: () async {
-                    await db.collection('cards').add({
-                      'cardNum': _cardNumController.text,
-                      'expiryDate': _expiryDateController.text,
-                      'cvv': _cvvController.text,
-                      'cardHolder': _cardHolderController.text
-                    }).then((result) => showSnackBar(context));
-                  },
-
-                  //onPressed: ()=> showSnackBar(context)
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: TextFormField(
+                    controller: _expiryDateController,
+                    cursorColor: widget.cursorColor ?? themeColor,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Expiry Date',
+                      hintText: 'MM/YY',
+                    ),
+                    keyboardType: TextInputType.datetime,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: TextFormField(
+                    controller: _cvvController,
+                    //focusNode: cvvFocusNode,
+                    cursorColor: widget.cursorColor ?? themeColor,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'CVV',
+                      hintText: '*',
+                    ),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    onChanged: (String text) {
+                      setState(() {
+                        cvv = text;
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: TextFormField(
+                    controller: _cardHolderController,
+                    cursorColor: widget.cursorColor ?? themeColor,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Card Holder',
+                    ),
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Container(
+                  width: 300.0,
+                  child: MaterialButton(
+                    child: Text(
+                      'Save Card',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    color: Color.fromRGBO(33, 37, 74, 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0)),
+                    onPressed: () async {
+                      await db.collection('cards').add({
+                        'cardNum': _cardNumController.text,
+                        'expiryDate': _expiryDateController.text,
+                        'cvv': _cvvController.text,
+                        'cardHolder': _cardHolderController.text
+                      }).then((result) => showSnackBar(context));
+                    },
+
+                    //onPressed: ()=> showSnackBar(context)
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
