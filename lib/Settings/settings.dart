@@ -137,17 +137,6 @@ class _Top extends State<Top> {
                                     height: 1.0,
                                     color: Color.fromRGBO(33, 37, 74, 1)),
                                 ListTile(
-                                  leading: Icon(Icons.keyboard,
-                                      color: Color.fromRGBO(33, 37, 74, 1)),
-                                  title: Text("Change Username"),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {}, //go to change password
-                                ),
-                                Container(
-                                    width: double.infinity,
-                                    height: 1.0,
-                                    color: Color.fromRGBO(33, 37, 74, 1)),
-                                ListTile(
                                   leading: Icon(Icons.settings_power,
                                       color: Color.fromRGBO(33, 37, 74, 1)),
                                   title: Text("Logout"),
