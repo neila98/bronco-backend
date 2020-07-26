@@ -32,13 +32,13 @@ Youtube URL:
 https://youtu.be/1nZHUJnGpog
 
 
-Backend Github Link:
+Frontend Github Link:
 ---------------------
 
 https://github.com/neila98/bronco-frontend.git
 
 
-Frontend Github Link:
+Backend Github Link:
 ---------------------
 
 https://github.com/neila98/bronco-backend.git
