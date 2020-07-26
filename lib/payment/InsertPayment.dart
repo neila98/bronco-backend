@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bronco2/Payment/addNewCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bronco2/models/user_model.dart';
+import 'package:bronco2/services/users_data_service.dart';
 //import 'package:bronco2/models/card_model.dart';
 
 Color firstColor = Color.fromRGBO(
@@ -38,7 +41,18 @@ class _InsertPaymentState extends State<InsertPayment>
   //get newValue => ;
   //List<Card> allCard;
   List<Card> allCard;
-  final dataService = CardDataService();
+  final dataServiceCard = CardDataService();
+  List<User> alluser;
+  final dataService = UserDataService();
+
+  final FocusNode myFocusNode = FocusNode();
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  Future<String> getUid() async {
+    return (await _firebaseAuth.currentUser()).uid;
+  }
+
+  String fname, email, surname, password;
 
   String cardNum;
   String expiryDate;
@@ -53,9 +67,10 @@ class _InsertPaymentState extends State<InsertPayment>
 
   Future<void> loadData() async {
     await Future.delayed(Duration(milliseconds: 0));
-    // final id = await getId();
+    final uid = await getUid();
+    // final cholder = await getCard();
     final map =
-        await Firestore.instance.collection('cards').document(cardHolder).get();
+        await Firestore.instance.collection('users').document(uid).get();
     print(map.data);
 
     setState(() {
@@ -63,24 +78,28 @@ class _InsertPaymentState extends State<InsertPayment>
       expiryDate = map.data['expiryDate'];
       cvv = map.data['cvv'];
       cardHolder = map.data['cardHolder'];
+      fname = map.data['fname'];
+      email = map.data['email'];
+      surname = map.data['surname'];
+      password = map.data['password'];
     });
-    return cardHolder;
+    return uid;
   }
 
   var index = 0;
   @override
   Widget build(BuildContext context) {
-    /*return FutureBuilder<List<Card>>(
-      future: dataService.getAllCard(),
+    return FutureBuilder<List<User>>(
+      future: dataService.getAllUser(),
       builder: (context, snapshot) {
-        if (snapshot.hasData){
-          allCard = snapshot.data;
+        if (snapshot.hasData) {
+          alluser = snapshot.data;
           return _cardScreen();
         }
         return _cardScreen();
       },
-
-    );*/
+    );
+    /*
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('cards').snapshots(),
         builder: (context, snapshot) {
@@ -89,7 +108,7 @@ class _InsertPaymentState extends State<InsertPayment>
           } else {
             return _cardScreen();
           }
-        });
+        });*/
   }
 
   Scaffold _cardScreen() {
@@ -200,7 +219,7 @@ class _InsertPaymentState extends State<InsertPayment>
                       color: Colors.white,
                       elevation: 15,
                       child: Container(
-                          height: 200,
+                          height: 180,
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.all(10.0),
                           padding: const EdgeInsets.all(8.0),
@@ -224,8 +243,23 @@ class _InsertPaymentState extends State<InsertPayment>
                                 child: Row(
                                   children: <Widget>[
                                     Text(
+                                      'Card Holder',
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        color: Colors.black45,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
                                         //'** ** ** 3484',
-                                        cardNum ?? "Loading...",
+                                        fname ?? "Loading...",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold)),
+                                    Text(surname ?? "Loading...",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 30.0,
@@ -242,61 +276,20 @@ class _InsertPaymentState extends State<InsertPayment>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Column(
+                                      Row(
                                         children: <Widget>[
                                           Text(
-                                            'Card Holder',
+                                            'Email',
                                             style: TextStyle(
                                               fontSize: 10.0,
                                               color: Colors.black45,
                                             ),
                                           ),
-                                          Text(
-                                            //'Amelia Rose',
-                                            cardHolder ?? "Loading...",
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: <Widget>[
                                           SizedBox(
-                                            width: 120,
+                                            width: 50,
                                           ),
                                           Text(
-                                            'Expires',
-                                            style: TextStyle(
-                                              fontSize: 10.0,
-                                              color: Colors.black45,
-                                            ),
-                                          ),
-                                          Text(
-                                            //'02/2023',
-                                            expiryDate ?? "Loading...",
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: <Widget>[
-                                          Text(
-                                            'CVV',
-                                            style: TextStyle(
-                                              fontSize: 10.0,
-                                              color: Colors.black45,
-                                            ),
-                                          ),
-                                          Text(
-                                            //'213',
-                                            cvv ?? "Loading...",
+                                            email ?? "Loading...",
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               color: Colors.black,
@@ -313,7 +306,7 @@ class _InsertPaymentState extends State<InsertPayment>
                           )),
                     ),
                     SizedBox(
-                      height: 80.0,
+                      height: 50.0,
                     ),
                     Column(
                       children: <Widget>[
@@ -398,6 +391,12 @@ class _InsertPaymentState extends State<InsertPayment>
   }
   //);
 
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    myFocusNode.dispose();
+    super.dispose();
+  }
 }
 
 void showSnackBar(BuildContext context) {
