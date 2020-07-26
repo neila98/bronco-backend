@@ -39,79 +39,81 @@ class _AboutUsState extends State<AboutUs> {
         backgroundColor: _appBarColor,
         centerTitle: true,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [firstColor, secondColor])),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 30.0,
-            ),
-            Center(
-              child: Container(
-                width: 400.0,
-                height: 600.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Card(
-                        color: Colors.white,
-                        margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.airplanemode_active),
-                              title: Text(
-                                'Bronco Airline is a Malaysian airline company hearquartered in Universiti Teknologi Malaysia, Johor. Bronco Airline operates scheduled domestic and international flights to more than 100 destinations',
-                                style: TextStyle(
-                                  color: Colors.black,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [firstColor, secondColor])),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 30.0,
+              ),
+              Center(
+                child: Container(
+                  width: 400.0,
+                  height: 600.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Card(
+                          color: Colors.white,
+                          margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.airplanemode_active),
+                                title: Text(
+                                  'Bronco Airline is a Malaysian airline company hearquartered in Universiti Teknologi Malaysia, Johor. Bronco Airline operates scheduled domestic and international flights to more than 100 destinations',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.airplanemode_active),
-                              title: Text(
-                                'Bronco Airlines started our operations as an official carrier for UTM on 1 January 2000. We are known with an outstanding and warm hospitality.',
-                                style: TextStyle(
-                                  color: Colors.black,
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.airplanemode_active),
+                                title: Text(
+                                  'Bronco Airlines started our operations as an official carrier for UTM on 1 January 2000. We are known with an outstanding and warm hospitality.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.airplanemode_active),
-                              title: Text(
-                                'This airline represents the diversity of UTM that synchronize with UTMs core values: Integrity, Synergy, Excellence and Sustainability.',
-                                style: TextStyle(
-                                  color: Colors.black,
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.airplanemode_active),
+                                title: Text(
+                                  'This airline represents the diversity of UTM that synchronize with UTMs core values: Integrity, Synergy, Excellence and Sustainability.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            )
-                          ],
+                              SizedBox(
+                                height: 30.0,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
