@@ -4,6 +4,7 @@ Project Title
 
 Bronco Airlines: A Flight Booking App
 
+
 Project Synopsis
 ----------------
 
@@ -15,6 +16,7 @@ This projecta have a centralized storage of database by applying the view of dis
 
 Besides that, the project focuses on various feature for reservation system like online registration, modifying details, and others. It has been designed to perform such task that as similar to other online ticketing application.
 
+
 Group Members:
 --------------
 
@@ -23,8 +25,24 @@ Group Members:
 3.  Izzah Atirah bt Mohamad Fazli (A17CS0060)
 4.  Fitri Nabiha bt Mohd Rizalman (A17CS0047)
 
+
 Youtube URL:
 ------------
+
+https://youtu.be/1nZHUJnGpog
+
+
+Frontend Github Link:
+---------------------
+
+https://github.com/neila98/bronco-frontend.git
+
+
+Frontend Github Link:
+---------------------
+
+https://github.com/neila98/bronco-backend.git
+
 
 
 Screen:
@@ -39,3 +57,4 @@ Screen:
 7. insert payment: to confirm payment transactions
 8. add new card: user can add new card for new payment method
 9. boarding pass: display e-boarding pass
+10. About: display travel information , product service and bronco
