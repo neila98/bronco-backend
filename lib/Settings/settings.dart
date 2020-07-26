@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:bronco2/Booking/booking_page.dart';
 import 'package:bronco2/HomePage/CustomShapeClipper.dart';
 import 'package:bronco2/About/AboutUs.dart';
-import 'package:bronco2/About/ProductsService.dart';
+
 import 'package:bronco2/About/travelInfo.dart';
 
 Color firstColor = Color.fromRGBO(

@@ -14,8 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailInputController = TextEditingController();
   final TextEditingController pwdInputController = TextEditingController();
-  bool _success;
-  String _userEmail;
+  //bool _success;
+  //String _userEmail;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<String> getUid() async {
     return (await _firebaseAuth.currentUser()).uid;

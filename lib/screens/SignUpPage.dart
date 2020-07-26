@@ -14,7 +14,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
 
-  final TextEditingController firstNameInputController = TextEditingController();
+  final TextEditingController firstNameInputController =
+      TextEditingController();
   final TextEditingController lastNameInputController = TextEditingController();
   final TextEditingController emailInputController = TextEditingController();
   final TextEditingController pwdInputController = TextEditingController();
@@ -205,51 +206,51 @@ class _SignUpPageState extends State<SignUpPage> {
                         //     MaterialPageRoute(builder: (context) {
                         //   return new LoginPage();
                         // }));
-                          _firebaseAuth
-                              .createUserWithEmailAndPassword(
-                                  email: emailInputController.text,
-                                  password: pwdInputController.text)
-                              .then((currentUser) => Firestore.instance
-                                  .collection("users")
-                                  .document(currentUser.uid)
-                                  .setData({
-                                    "uid": currentUser.uid,
-                                    "fname": firstNameInputController.text,
-                                    "surname": lastNameInputController.text,
-                                    "email": emailInputController.text,
-                                    "password": pwdInputController.text,
-                                  })
-                                  .then((result) => {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => LoginPage()),
-                                            (_) => false),
-                                        firstNameInputController.clear(),
-                                        lastNameInputController.clear(),
-                                        emailInputController.clear(),
-                                        pwdInputController.clear(),
-                                      })
-                              //     .catchError((err) => print(err)))
-                              // .catchError((err) => print(err)
-                              );
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text("Try Again"),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text("Close"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    )
-                                  ],
+                        _firebaseAuth
+                            .createUserWithEmailAndPassword(
+                                email: emailInputController.text,
+                                password: pwdInputController.text)
+                            .then((currentUser) => Firestore.instance
+                                        .collection("users")
+                                        .document(currentUser.uid)
+                                        .setData({
+                                      "uid": currentUser.uid,
+                                      "fname": firstNameInputController.text,
+                                      "surname": lastNameInputController.text,
+                                      "email": emailInputController.text,
+                                      "password": pwdInputController.text,
+                                    }).then((result) => {
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LoginPage()),
+                                                  (_) => false),
+                                              firstNameInputController.clear(),
+                                              lastNameInputController.clear(),
+                                              emailInputController.clear(),
+                                              pwdInputController.clear(),
+                                            })
+                                //     .catchError((err) => print(err)))
+                                // .catchError((err) => print(err)
                                 );
-                              });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Error"),
+                                content: Text("Try Again"),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            });
                       }
                     },
                     child: Container(

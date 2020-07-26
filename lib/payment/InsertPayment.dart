@@ -450,6 +450,6 @@ Future navigateToCardForm(context) async {
       context,
       MaterialPageRoute(
           builder: (context) => AddNewCard(
-                onCreditCardModelChange: (CreditCardModel) {},
+                onCreditCardModelChange: (creditCardModel) {},
               )));
 }

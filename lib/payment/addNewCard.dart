@@ -60,7 +60,7 @@ class _AddNewCardState extends State<AddNewCard> {
   void Function(CreditCardModel) onCreditCardModelChange;
   CreditCardModel creditCardModel;
 
-  final TextEditingController _idController = TextEditingController();
+  //final TextEditingController _idController = TextEditingController();
   final MaskedTextController _cardNumController =
       MaskedTextController(mask: '0000 0000 0000 0000');
   final TextEditingController _expiryDateController =

@@ -19,7 +19,7 @@ Color secondColor = Color.fromRGBO(
   class PayConfirmation extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
+    
     return PayConfirmationState();
   }
 }
@@ -33,7 +33,7 @@ Color secondColor = Color.fromRGBO(
   var _appBarColor = Color(0xff21254A);
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

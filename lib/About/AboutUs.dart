@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bronco2/Settings/settings.dart';
+//import 'package:bronco2/Settings/settings.dart';
 
 Color firstColor = Color.fromRGBO(
   242,

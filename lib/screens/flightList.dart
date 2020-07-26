@@ -1,5 +1,5 @@
 import 'package:bronco2/HomePage/CustomShapeClipper.dart';
-import 'package:bronco2/Settings/settings.dart';
+//import 'package:bronco2/Settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:bronco2/Payment/flightSummary.dart';
@@ -202,28 +202,25 @@ class FlightCard extends StatelessWidget {
                       //FlightDetailChip(Icons.flight_takeoff, 'Bronco Airlines'),
                       FlightDetailChip(Icons.star, '4.8'),
                       MaterialButton(
-                      child: Column(
-                        children: <Widget>[
-                        Icon(Icons.payment),
-                        Text(
-                          'Buy',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.payment),
+                            Text(
+                              'Buy',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                      ),
-                            //color: Color(0xff21254A),
-                            onPressed: () {
-                              navigateToFlightSUmmary(context);
-                            },
-                            
-                          )
+                        //color: Color(0xff21254A),
+                        onPressed: () {
+                          navigateToFlightSUmmary(context);
+                        },
+                      )
                     ],
-                    
                   ),
-                  
                 ],
               ),
             ),
@@ -271,6 +268,8 @@ class FlightDetailChip extends StatelessWidget {
         ));
   }
 }
+
 Future navigateToFlightSUmmary(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightSummary()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => FlightSummary()));
 }
