@@ -323,7 +323,7 @@ class _UserProfileState extends State<UserProfile>
                       padding: const EdgeInsets.symmetric(horizontal: 9.0),
                       child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        //children: buildRelationship(selectedRelationship, rel),
+                        children: buildRelationship(selectedRelationship, rel),
                       ),
                     ),
                   ),
